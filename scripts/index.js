@@ -34,7 +34,7 @@ function removeCard(e) {
 
 function addCards(initialCards) {
   initialCards.forEach((cards) => {
-    const cardElement = createCard(cards);
+    const cardElement = createCard(cards, removeCard);
     cardsContainer.append(cardElement);
   });
 }
