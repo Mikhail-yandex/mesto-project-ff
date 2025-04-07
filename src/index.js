@@ -4,8 +4,8 @@ import { cardTemplate, createCard, removeCard, cardLikeToggle } from "./componen
 import { handleEscKeyUp, openModal, closeModal, addEventListenerFunction } from "./components/modal.js";
 
 const cardsContainer = document.querySelector(".places__list");
-const name = document.querySelector(".profile__title");
-const description = document.querySelector(".profile__description");
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
 
 // @todo: Вывести карточки на страницу
 
@@ -31,6 +31,8 @@ const popupImage = document.querySelector(".popup_type_image");
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 profileEditButton.addEventListener("click", () => {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent; 
   openModal(popupProfileEdit);
 });
 
@@ -71,8 +73,8 @@ function handleProfileFormSubmit(evt) {
 
   // Вставьте новые значения с помощью textContent
 
-  name.textContent = nameValue;
-  description.textContent = jobValue;
+  profileTitle.textContent = nameValue;
+  profileDescription.textContent = jobValue;
 
   closeModal(popupProfileEdit);
 }
