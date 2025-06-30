@@ -1,37 +1,37 @@
+// показать попап
 
-export const handleEscKeyUp = (e) => {
-  if (e.key === "Escape") {
-    const popup = document.querySelector(".popup_is-opened"); // находим открытый попап
-    closeModal(popup);
+function showPopup(popup) {
+  popup.classList.add("popup_is-opened");
+  document.addEventListener("keydown", quitOnEsc);
+  popup.addEventListener("click", quitOnOverlayClick);
+}
+
+// скрыть попап
+
+function closePopup() {
+  const popup = document.querySelector(".popup_is-opened");
+  popup.classList.remove("popup_is-opened");
+  popup.removeEventListener("click", quitOnOverlayClick);
+  document.removeEventListener("keydown", quitOnEsc);
+}
+
+// Скрыть попап по нажатию клавишу Esc
+
+function quitOnEsc(e) {
+  if (e.key == "Escape") {
+    closePopup();
   }
-};
+}
 
-export const openModal = (modal) => {
-  // добавить класс открытия попапа
-  modal.classList.add("popup_is-opened");
+// скрыть попап по нажатию на оверлей
 
-  // добавить слушатель на кнопку Escape
-  document.addEventListener("keydown", handleEscKeyUp);
-};
+function quitOnOverlayClick(e) {
+  if (e.target.classList.contains("popup")) {
+    closePopup();
+  }
+}
 
-export const closeModal = (modal) => {
-  // удалить класс открытия попапа
-  modal.classList.remove("popup_is-opened");
+export { showPopup, closePopup };
 
-  // удалить слушатель на кнопку Escape
-  document.removeEventListener("keydown", handleEscKeyUp);
-};
 
-export const addEventListenerFunction = (popupElement) => {
-  // ищем кнопку крестик в попапе
-  const popupClose = popupElement.querySelector(".popup__close");
-  popupClose.addEventListener("click", () => {
-    closeModal(popupElement);
-  });
 
-  popupElement.addEventListener("mousedown", (event) => {
-    if (event.target.classList.contains("popup")) {
-      closeModal(popupElement);
-    }
-  });
-};
