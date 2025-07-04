@@ -74,9 +74,7 @@ function handleAvatarSubmit(e) {
   updateAvatar(url)
     .then((data) => {
       profileImg.style.backgroundImage = `url(${data.avatar})`;
-    })
-    .then(() => {
-      closePopup();
+      closePopup(editProfileImgPopup);
     })
     .catch((err) => {
       console.log(err);
@@ -92,11 +90,11 @@ avatarForm.addEventListener("submit", (e) => {
 
 // Слушатели событий на кнопки
 
-closeBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    closePopup();
-  });
-});
+// closeBtns.forEach((btn) => {
+//   btn.addEventListener("click", () => {
+//     closePopup();
+//   });
+// });
 
 editProfileBtn.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
@@ -129,22 +127,6 @@ const jobInput = editProfileForm.querySelector(
   ".popup__input_type_description"
 );
 
-// Инициализируем профиль пользователя
-
-function setProfileData() {
-  getProfileData()
-    .then((profileData) => {
-      profileName.textContent = profileData.name;
-      profileJob.textContent = profileData.about;
-      profileImg.style.backgroundImage = `url(${profileData.avatar})`;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-setProfileData();
-
 // Обработчик формы редактирования профиля
 
 function handleEditProfileSubmit(e) {
@@ -158,7 +140,7 @@ function handleEditProfileSubmit(e) {
       profileJob.textContent = data.about;
     })
     .then(() => {
-      closePopup();
+      closePopup(editProfilePopup);
       e.target.reset();
     })
     .catch((err) => {
@@ -182,13 +164,11 @@ const linkInput = addCardForm.querySelector(".popup__input_type_url");
 const popupImg = document.querySelector(".popup__image");
 const popupCaption = document.querySelector(".popup__caption");
 
-function showPopupImage(img, title, popup) {
-  return () => {
+function showPopupImage(img, title) {
     popupImg.src = img;
     popupImg.alt = `${title} на фотографии`;
     popupCaption.textContent = title;
-    showPopup(popup);
-  };
+    showPopup(imgPopup);
 }
 
 // Обработчик формы добавления карточки
@@ -216,7 +196,7 @@ function handleAddCardSubmit(e) {
       );
     })
     .then(() => {
-      closePopup();
+      closePopup(addCardPopup);
       e.target.reset();
     })
     .catch((err) => {
@@ -235,6 +215,9 @@ addCardForm.addEventListener("submit", handleAddCardSubmit);
 function setInitialCards() {
   Promise.all([getInitialCards(), getProfileData()])
     .then(([cards, profileData]) => {
+      profileName.textContent = profileData.name;
+      profileJob.textContent = profileData.about;
+      profileImg.style.backgroundImage = `url(${profileData.avatar})`;
       userId = profileData._id;
       cards.forEach((cardInfo) => {
         cardsContainer.append(

@@ -85,9 +85,7 @@ function clearValidation(
   setButtonState(inputList, buttonElement, inactiveButtonClass);
   inputList.forEach((inputElement) => {
     if (inputElement.classList.contains(inputErrorClass)) {
-      inputElement.classList.remove(inputErrorClass);
-      const errorElement = inputElement.nextElementSibling;
-      errorElement.textContent = "";
+      hideInputError(inputErrorClass);
     }
   });
 }

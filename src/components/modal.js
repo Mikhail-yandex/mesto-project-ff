@@ -3,15 +3,14 @@
 function showPopup(popup) {
   popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", quitOnEsc);
-  popup.addEventListener("click", quitOnOverlayClick);
+  document.addEventListener("click", quitOnOverlayClick);
 }
 
 // скрыть попап
 
-function closePopup() {
-  const popup = document.querySelector(".popup_is-opened");
+function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
-  popup.removeEventListener("click", quitOnOverlayClick);
+  document.removeEventListener("click", quitOnOverlayClick);
   document.removeEventListener("keydown", quitOnEsc);
 }
 
@@ -19,15 +18,17 @@ function closePopup() {
 
 function quitOnEsc(e) {
   if (e.key == "Escape") {
-    closePopup();
+    const popupOpen = document.querySelector(".popup_is-opened");
+    closePopup(popupOpen);
   }
 }
 
 // скрыть попап по нажатию на оверлей
 
-function quitOnOverlayClick(e) {
-  if (e.target.classList.contains("popup")) {
-    closePopup();
+function quitOnOverlayClick(evt) {
+  if (evt.target.classList.contains("popup__close") || evt.target.classList.contains("popup")) {
+    const popupOpen = document.querySelector(".popup_is-opened");
+    closePopup(popupOpen);
   }
 }
 

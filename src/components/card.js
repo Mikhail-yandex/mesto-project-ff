@@ -9,7 +9,7 @@ function createCard(
   removeCard,
   showPopupImage,
   handleLike,
-  imgPopup
+   
 ) {
   const card = cardTemplate.cloneNode(true);
 
@@ -20,10 +20,9 @@ function createCard(
   cardImage.src = cardData.link;
   cardImage.alt = `${cardData.name} на фотографии`;
 
-  cardImage.addEventListener(
-    "click",
-    showPopupImage(cardData.link, cardData.name, imgPopup)
-  );
+  cardImage.addEventListener("click", function () {
+  showPopupImage(cardData.link, cardData.name)
+});
 
   const cardLikesCounter = card.querySelector(".card__like-counter");
   cardLikesCounter.textContent = cardData.likes.length;
